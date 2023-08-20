@@ -1,90 +1,470 @@
+#test
+#battle ships
 import pygame
-import sys
 
-# Initialize Pygame
+# Initialize pygame
 pygame.init()
 
-# Constants
-WIDTH, HEIGHT = 300, 300
-LINE_COLOR = (0, 0, 0)
-BG_COLOR = (255, 255, 255)
-LINE_WIDTH = 15
-BOARD_ROWS = 3
-BOARD_COLS = 3
-SQUARE_SIZE = WIDTH // BOARD_COLS
+# Set up the screen
+Black = (0,0,0)
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+screen.fill((255, 255, 255))
 
-# Create the game window
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Tic Tac Toe")
+#Load The images
+imp = pygame.image.load("Cross.png")
+imp = pygame.transform.scale(imp, (100,100))
+imp2 = pygame.image.load("Nought.png")
+imp2 = pygame.transform.scale(imp2, (100,100))
 
-# Initialize the board
-board = [['' for _ in range(BOARD_COLS)] for _ in range(BOARD_ROWS)]
+#initilize the font
+font = pygame.font.SysFont("Arial", 32)
 
-# Draw the grid
-def draw_grid():
-    for row in range(1, BOARD_ROWS):
-        pygame.draw.line(screen, LINE_COLOR, (0, row * SQUARE_SIZE), (WIDTH, row * SQUARE_SIZE), LINE_WIDTH)
-    for col in range(1, BOARD_COLS):
-        pygame.draw.line(screen, LINE_COLOR, (col * SQUARE_SIZE, 0), (col * SQUARE_SIZE, HEIGHT), LINE_WIDTH)
+def RedrawGameWindow():
 
-# Draw the X and O symbols
-def draw_symbols():
-    for row in range(BOARD_ROWS):
-        for col in range(BOARD_COLS):
-            if board[row][col] == 'X':
-                pygame.draw.line(screen, LINE_COLOR, (col * SQUARE_SIZE, row * SQUARE_SIZE), ((col + 1) * SQUARE_SIZE, (row + 1) * SQUARE_SIZE), LINE_WIDTH)
-                pygame.draw.line(screen, LINE_COLOR, ((col + 1) * SQUARE_SIZE, row * SQUARE_SIZE), (col * SQUARE_SIZE, (row + 1) * SQUARE_SIZE), LINE_WIDTH)
-            elif board[row][col] == 'O':
-                pygame.draw.circle(screen, LINE_COLOR, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), SQUARE_SIZE // 2, LINE_WIDTH)
+  screen.fill((255, 255, 255))
+  
+  global G00
+  global G01
+  global G02
+  global G10
+  global G11
+  global G12
+  global G20
+  global G21
+  global G22
+  
+  G00 =pygame.draw.rect(screen, Black, (250, 150, 100, 100), 1)
 
-# Check for a win or tie
-def check_winner(symbol):
-    # Check rows
-    for row in board:
-        if all(cell == symbol for cell in row):
-            return True
+  G01 = pygame.draw.rect(screen, Black, (350, 150, 100, 100), 1)
+
+  G02 = pygame.draw.rect(screen, Black, (450, 150, 100, 100), 1)  
+
+  G10 = pygame.draw.rect(screen, Black, (250, 250, 100, 100), 1)
     
-    # Check columns
-    for col in range(BOARD_COLS):
-        if all(board[row][col] == symbol for row in range(BOARD_ROWS)):
-            return True
-    
-    # Check diagonals
-    if all(board[i][i] == symbol for i in range(BOARD_ROWS)) or all(board[i][BOARD_COLS - 1 - i] == symbol for i in range(BOARD_ROWS)):
-        return True
-    
-    return False
+  G11 = pygame.draw.rect(screen, Black, (350, 250, 100, 100), 1)
 
-# Main game loop
-turn = 'X'
-game_over = False
-while not game_over:
+  G12 =pygame.draw.rect(screen, Black, (450, 250, 100, 100), 1)
+
+  G20 =pygame.draw.rect(screen, Black, (250, 350, 100, 100), 1)
+
+  G21 = pygame.draw.rect(screen, Black, (350, 350, 100, 100), 1)
+
+  G22 = pygame.draw.rect(screen, Black, (450, 350, 100, 100), 1)
+
+  grid = [[" "," "," "],[" "," "," "],[" "," "," "]]
+  
+  pygame.display.flip()
+
+def displayGrid(grid):
+  print(" " + grid[0][0] + " | " + grid[0][1] + " | " + grid[0][2])
+  print("-----------")
+  print(" " + grid[1][0] + " | " + grid[1][1] + " | " + grid[1][2])
+  print("-----------")
+  print(" " + grid[2][0] + " | " + grid[2][1] + " | " + grid[2][2])
+
+def checkGridX(grid):
+  global RowMsg
+  #Checks The Rows
+  
+  if grid[0][0]=="X" and grid[0][1]=="X" and grid[0][2]=="X":
+    RowMsg = "Three Xs in a row."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print(RowMsg)
+    #winner = True
+      
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+      
+  if grid[1][0]=="X" and grid[1][1]=="X" and grid[1][2]=="X":
+    RowMsg = "Three Xs in a row."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print(RowMsg)
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+  if grid[2][0]=="X" and grid[2][1]=="X" and grid[2][2]=="X":
+    RowMsg = "Three Xs in a row."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three Xs in a row.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+  #Checks The Collums
+
+  if grid[0][0]=="X" and grid[1][0]=="X" and grid[2][0]=="X":
+    RowMsg = "Three Xs in a Collum."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three Xs in a Collum.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+  
+  if grid[0][1]=="X" and grid[1][1]=="X" and grid[2][1]=="X":
+    RowMsg = "Three Xs in a Collum."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three Xs in a Collum.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+  
+  if grid[0][2]=="X" and grid[1][2]=="X" and grid[2][2]=="X":
+    RowMsg = "Three Xs in a Collum."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three Xs in a Collum.")
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+  #Checks Diagonals
+
+  if grid[2][0]=="X" and grid[1][1]=="X" and grid[0][2]=="X":
+    RowMsg = "Three Xs in a Diagonal."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three Xs in a Diagonal.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+  
+  if grid[0][0]=="X" and grid[1][1]=="X" and grid[2][2]=="X":
+    RowMsg = "Three Xs in a Diagonal."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three Xs in a diagonal.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+def checkGrid0(grid):
+  
+  if grid[0][0]=="O" and grid[0][1]=="O" and grid[0][2]=="O":
+    RowMsg = "Three 0s in a row."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three 0s in a row.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+  
+  if grid[1][0]=="O" and grid[1][1]=="O" and grid[1][2]=="O":
+    RowMsg = "Three 0s in a row."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three 0s in a row.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+  if grid[2][0]=="O" and grid[2][1]=="O" and grid[2][2]=="O":
+    RowMsg = "Three 0s in a row."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three 0s in a row.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+  #Checks The Collums
+
+  if grid[0][0]=="O" and grid[1][0]=="O" and grid[2][0]=="O":
+    RowMsg = "Three 0s in a Collum."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three 0s in a Collum.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+  if grid[0][1]=="O" and grid[1][1]=="O" and grid[2][1]=="O":
+    RowMsg = "Three 0s in a Collum."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three 0s in a Collum.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+  if grid[0][2]=="O" and grid[1][2]=="O" and grid[2][2]=="O":
+    RowMsg = "Three 0s in a Collum."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three 0s in a Collum.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+  #Checks Diagonals
+
+  if grid[2][0]=="O" and grid[1][1]=="O" and grid[0][2]=="O":
+    RowMsg = "Three 0s in a diagonal."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three Os in a Diagonal.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+  
+  if grid[0][0]=="O" and grid[1][1]=="O" and grid[2][2]=="O":
+    RowMsg = "Three 0s in a diagonal."
+    text2 = font.render(RowMsg, True, (0, 0, 0))
+    print("Three Os in a diagonal.")
+    #winner = True
+    screen.blit(text2, text_rect2)
+    text3 = font.render("Press R to restart", True, (0, 0, 0))  # Render the text
+    text_rect3 = text.get_rect(center=(screen_width/2, 700))
+    screen.blit(text3, text_rect3)
+
+#Intializing More varibles
+grid = [[" "," "," "],[" "," "," "],[" "," "," "]] #creates the Consle Reperezentaio of the Grid
+Turn = True # Deterumins wether its X or Os turn
+#winner = False
+
+#Creates the Grid In Pygame
+
+
+displayGrid(grid)
+RedrawGameWindow()
+# Set up the game loop
+running = True
+while running:
+    # Handle events
+  
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        
-        if event.type == pygame.MOUSEBUTTONDOWN and not game_over:
-            mouseX = event.pos[0]
-            mouseY = event.pos[1]
-            clicked_row = mouseY // SQUARE_SIZE
-            clicked_col = mouseX // SQUARE_SIZE
-            
-            if board[clicked_row][clicked_col] == '':
-                board[clicked_row][clicked_col] = turn
-                if check_winner(turn):
-                    game_over = True
-                elif all(cell != '' for row in board for cell in row):
-                    game_over = True
-                else:
-                    turn = 'O' if turn == 'X' else 'X'
-    
-    screen.fill(BG_COLOR)
-    draw_grid()
-    draw_symbols()
-    pygame.display.update()
+      
+      #Mouse Detection
+      #Checks For mouse clicking within each aquare
+      if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_r:
+          RedrawGameWindow()
+          grid = [[" "," "," "],[" "," "," "],[" "," "," "]]
+          Turn = True
 
-# Game loop ended, wait for a while before quitting
-pygame.time.wait(2000)
+      if event.type == pygame.MOUSEBUTTONDOWN:
+          
+          if G00.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 0
+            col = 0
+            if "X" in grid[0][0] or "O" in grid[0][0]: # Checks wether the grid is empty
+              print("stop")
+            else:
+              if Turn == True:
+                grid[row][col] = "X"
+                Turn = False
+                screen.blit(imp, (250,150))
+              else:
+                screen.blit(imp2, (250, 150))
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+              
+              
+            
+              displayGrid(grid)
+            
+              pygame.display.flip()
+              checkGridX(grid)
+          if G01.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 0
+            col = 1
+            if "X" in grid[0][1] or "O" in grid[0][1]:
+              print("Stop")
+            else:
+              if Turn == True:
+                grid[row][col] = "X"
+                Turn = False
+                screen.blit(imp, (350,150))
+              else:
+                screen.blit(imp2, (350,150))
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+              displayGrid(grid)
+
+              pygame.display.flip()
+              checkGridX(grid)
+              
+          if G02.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 0
+            col = 2
+            if "X" in grid[0][2] or "O" in grid[0][2]:
+              print("Stop")
+            else:
+              if Turn == True:
+                grid[row][col] = "X"
+                Turn = False
+                screen.blit(imp, (450,150))
+              else:
+                screen.blit(imp2, (450,150))
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+                displayGrid(grid)
+              
+              pygame.display.flip()
+              checkGridX(grid)
+          if G10.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 1
+            col = 0
+            if "X" in grid[1][0] or "O" in grid[1][0]:
+              print("Stop")
+            else:
+              if Turn == True:
+                screen.blit(imp, (250,250))
+                grid[row][col] = "X"
+                Turn = False
+              else:
+                screen.blit(imp2, (250,250))
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+              displayGrid(grid)
+            
+              pygame.display.flip()
+              checkGridX(grid)
+          if G11.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 1
+            col = 1
+            if "X" in grid[1][1] or "O" in grid[1][1]:
+              print("Stop")
+            else:
+              if Turn == True:
+                screen.blit(imp, (350,250))
+                grid[row][col] = "X"
+                Turn = False
+              else:
+                screen.blit(imp2, (350,250))
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+              displayGrid(grid)
+            
+              pygame.display.flip()
+              checkGridX(grid)
+          if G12.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 1
+            col = 2
+            if "X" in grid[1][2] or "O" in grid[1][2]:
+              print("Stop")
+            else:
+              if Turn == True:
+                screen.blit(imp, (450,250))
+                grid[row][col] = "X"
+                Turn = False
+              else:
+                screen.blit(imp2, (450,250))
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+              displayGrid(grid)
+              
+              pygame.display.flip()
+              checkGridX(grid)
+          if G20.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 2
+            col = 0
+            if "X" in grid[2][0] or "O" in grid[2][0]:
+              print("Stop")
+            else:
+              if Turn == True:
+                screen.blit(imp, (250,350))
+                grid[row][col] = "X"
+                Turn = False
+              else:
+                screen.blit(imp2, (250,350))
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+              displayGrid(grid)
+              
+              pygame.display.flip()
+              checkGridX(grid)
+          if G21.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 2
+            col = 1
+            if "X" in grid[2][1] or "O" in grid[2][1]:
+              print("Stop")
+            else:
+              if Turn == True:
+                screen.blit(imp, (350,350))
+                grid[row][col] = "X"
+                Turn = False
+                
+              else:
+                screen.blit(imp2, (350,350))
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+              displayGrid(grid)
+              
+              pygame.display.flip()
+              checkGridX(grid)
+          if G22.collidepoint(pygame.mouse.get_pos()):
+            print ('CLICKED!')
+            row = 2
+            col = 2
+            if "X" in grid[2][2] or "O" in grid[2][2]:
+              print("Stop")
+            else:
+              if Turn == True:
+                screen.blit(imp, (450,350))
+                grid[row][col] = "X"
+                Turn = False
+                checkGridX(grid)
+              else:
+                screen.blit(imp2, (450,350))
+                
+                grid[row][col] = "O"
+                Turn = True
+                checkGrid0(grid)
+                
+              displayGrid(grid)
+              
+              pygame.display.flip()
+              checkGridX(grid)
+
+      if event.type == pygame.QUIT: #Checks whether you pressed the X button
+        running = False
+    
+    text = font.render("Tic Tac toe ", True, (0, 0, 0))  # Render the text
+    text_rect = text.get_rect(center=(screen_width/2, 100))  # Get the rectangle for the text
+    
+    #text2 = font.render(RowMsg, True, (0, 0, 0))  # Render the text
+    text_rect2 = text.get_rect(center=(350, 500))
+    
+    screen.blit(text, text_rect)
+    pygame.display.flip()  # Update the screen
+
+  
+# Quit pygame
 pygame.quit()
-sys.exit()
